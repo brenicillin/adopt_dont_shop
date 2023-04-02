@@ -174,7 +174,7 @@ Then I do not see a section to submit my application
 These stories emphasize key database concepts
 
 ```
-[ ] done
+[x] done
 
 8. Partial Matches for Pet Names
 
@@ -186,7 +186,7 @@ For example, if I search for "fluff", my search would match pets with names "flu
 ```
 
 ```
-[ ] done
+[x] done
 
 9. Case Insensitive Matches for Pet Names
 
@@ -202,6 +202,8 @@ SQL Only Story
 
 For this story, you should write your queries in raw sql. You can use the ActiveRecord find_by_sql method to execute raw sql queries: https://guides.rubyonrails.org/active_record_querying.html#finding-by-sql
 
+[x] done
+
 10. Admin Shelters Index
 
 As a visitor
@@ -211,6 +213,8 @@ Then I see all Shelters in the system listed in reverse alphabetical order by na
 
 ```
 For this story, you should fully leverage ActiveRecord methods in your query.
+
+[x] done
 
 11. Shelters with Pending Applications
 
