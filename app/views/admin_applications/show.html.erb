@@ -1,0 +1,18 @@
+<h1>Application Details</h1>
+
+<p>Name: <%= @application.name %></p>
+<p>Address: <%= @application.address %>, <%= @application.city %>, <%= @application.state %> <%= @application.zip %></p>
+<p>Description: <%= @application.description %></p>
+<p>Application Status: <%= @application.status %></p>
+
+<h2>Pets</h2>
+<% @pets.each do |pet| %>
+  <p><%= pet.name %></p>
+  <% pet_application = pet.pet_applications.find_by(application_id: @application.id) %>
+  <% if pet_application.status == "Pending" %>
+    <%= button_to "Approve", approve_pet_application_path(id: @application.id, pet_id: pet.id), method: :patch %>
+    <%= button_to "Reject", reject_pet_application_path(id: @application.id, pet_id: pet.id), method: :patch %>
+  <% else %>
+    <p><%= pet_application.status %></p>
+  <% end %>
+<% end %>
