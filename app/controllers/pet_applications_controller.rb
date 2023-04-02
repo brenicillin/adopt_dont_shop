@@ -1,7 +1,7 @@
 class PetApplicationsController < ApplicationController
   def create
     application = Application.find(params[:application_id])
-    pets = application.pets.uniq
+    pets = application.pets.distinct
     if pets.length == 1
       params[:pet_id] = pets.first.id
       PetApplication.create!(pet_application_params)
