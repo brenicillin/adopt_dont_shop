@@ -14,6 +14,20 @@
 </div>
   <br/>
 
+<div>
+  <% if @application.pets.any? && @application.status == "In Progress" %>
+    <% if @application.pets.length == 1 %>
+    <p><b>Why I'd make a good owner for this pet:</b></p>
+    <% else %>
+    <p><b>Why I'd make a good owner for these pets:</b></p>
+    <% end %>
+    <%= form_tag "/pet_applications", method: :post do %>
+      <%= text_field_tag :description %>
+      <%= button_to "Submit Application" %>
+      <% end %>
+  <% end %>
+</div>
+
 <div> 
   <%= render "pet_search" %>
 </div>
