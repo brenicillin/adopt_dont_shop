@@ -1,15 +1,5 @@
 require 'rails_helper'
 
-# 1. Application Show Page
-
-# As a visitor
-# When I visit an applications show page
-# Then I can see the following:
-# - Name of the Applicant
-# - Full Address of the Applicant including street address, city, state, and zip code
-# - Description of why the applicant says they'd be a good home for this pet(s)
-# - names of all pets that this application is for (all names of pets should be links to their show page)
-# - The Application's status, either "In Progress", "Pending", "Accepted", or "Rejected"
 
 RSpec.describe 'Application Show Page' do
   before(:each) do
@@ -18,6 +8,7 @@ RSpec.describe 'Application Show Page' do
     @pet_2 = Pet.create(adoptable: true, age: 3, breed: 'doberman', name: 'Lobster', shelter_id: @shelter.id)
     @pet_3 = Pet.create(adoptable: true, age: 2, breed: 'sphynx', name: 'Sphynx', shelter_id: @shelter.id)
     @application_1 = Application.create!(name: 'John Doe', address: '123 Main St', city: 'Aurora', state: 'CO', zip: '80041', description: 'I love animals', status: 'In Progress')
+    @application_2 = Application.create!(name: 'Jane Doe', address: '123 Main St', city: 'Aurora', state: 'CO', zip: '80041', description: 'I love animals', status: 'In Progress')
     PetApplication.create!(pet_id: @pet_1.id, application_id: @application_1.id)
     PetApplication.create!(pet_id: @pet_3.id, application_id: @application_1.id)
   end
@@ -54,10 +45,40 @@ RSpec.describe 'Application Show Page' do
 
         fill_in :pet_name, with: "Lucille"
         click_button "Search"
-
+        
+        expect(current_path).to eq("/applications/#{@application_1.id}")
         expect(page).to have_content("Lucille Bald")
         expect(page).to_not have_content("Lobster")
       end
+    end
+  end
+
+  describe 'application form' do
+    it 'does not render form if no pet is present' do
+      visit "/applications/#{@application_2.id}"
+
+
+      expect(page).to_not have_field(:description)
+      expect(page).to_not have_button("Submit Application")
+    end
+
+    it 'renders form with one pet correctly' do
+      @application_2.pets << @pet_1
+      visit "/applications/#{@application_2.id}"
+
+      expect(page).to have_content("Why I'd make a good owner for this pet:")
+      expect(page).to have_field(:description)
+      expect(page).to have_button("Submit Application")
+    end
+  
+    it 'renders form with multiple pets correctly' do
+      @application_2.pets << @pet_1
+      @application_2.pets << @pet_2
+      visit "/applications/#{@application_2.id}"
+
+      expect(page).to have_content("Why I'd make a good owner for these pets:")
+      expect(page).to have_field(:description)
+      expect(page).to have_button("Submit Application")
     end
   end
 end

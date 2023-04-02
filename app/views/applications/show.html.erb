@@ -1,19 +1,37 @@
-<h1><%= @application.name %>'s Application</h2>
+<h1><%= @application.name %>'s Application</h1>
 
 <div>
   <p><b>Address:</b></p>
   <p><%= @application.address %></p>
   <p><%= @application.city %>, <%= @application.state %> <%= @application.zip %></p>
   <p><b>Animals I'd like to adopt:</b></p>
-    <% @application.pets.each do |pet| %>
+    <% @application.pets.uniq.each do |pet| %>
   <p><%= link_to pet.name, "/pets/#{pet.id}" %></p>
     <% end %>
-  <p><b>Why I'd make a good cat dad:</b><br>
+  <p><b>Why I'd make a good pet owner:</b><br>
   <%= @application.description %></p>
   <p><b>Application Status:</b> <%= @application.status %></p>
 </div>
-  <br/>
+<br/>
 
-<div> 
-  <%= render "pet_search" %>
-</div>
+
+<% if @application.pets.any? && @application.status == "In Progress" %>
+  <% if @application.pets.length == 1 %>
+  <p><b>Why I'd make a good owner for this pet:</b></p>
+  <% else %>
+  <p><b>Why I'd make a good owner for these pets:</b></p>
+  <% end %>
+  <%= form_tag "/pet_applications", method: :post do %>
+    <%= hidden_field_tag :application_id, @application.id %>
+    <% @application.pets.each do |pet| %>
+      <%= hidden_field_tag "pet_ids[]", pet.id %>
+    <% end %>
+    <%= text_field_tag :description %>
+    <%= submit_tag "Submit Application" %>
+  <% end %>
+<% end %>
+
+
+<% if @application.status == "In Progress" %>
+<%= render "pet_search" %>
+<% end %>
