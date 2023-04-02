@@ -5,7 +5,7 @@
   <p><%= @application.address %></p>
   <p><%= @application.city %>, <%= @application.state %> <%= @application.zip %></p>
   <p><b>Animals I'd like to adopt:</b></p>
-    <% @application.pets.uniq.each do |pet| %>
+    <% @application.pets.distinct.each do |pet| %>
   <p><%= link_to pet.name, "/pets/#{pet.id}" %></p>
     <% end %>
   <p><b>Why I'd make a good pet owner:</b><br>
