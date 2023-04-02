@@ -1,0 +1,20 @@
+<h1><%= @application.name %>'s Application</h1>
+
+<div>
+  <p><b>Address:</b></p>
+  <p><%= @application.address %></p>
+  <p><%= @application.city %>, <%= @application.state %> <%= @application.zip %></p>
+  <p><b> Why I would make a good pet owner: </p></b>
+  <p><%= @application.description %></p>
+  <p><b>Animals I'd like to adopt:</b></p>
+  <% @pets.each do |pet| %>
+    <p><%= link_to pet.name, "/pets/#{pet.id}" %></p>
+    <% if @pet_application.status == "Pending" %>
+    <%= form_with model: @pet_application, url: "/pet_applications", method: :patch do |f| %>
+      <%= f.hidden_field :pet_id, value: pet.id %>
+      <%= f.hidden_field :application_id, value: @application.id %>
+      <%= f.hidden_field :status, value: "Approved" %>
+      <%= f.submit "Approve Application for #{pet.name}" %>
+    <% end %>
+  <% end %>
+</div>

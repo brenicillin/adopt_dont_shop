@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   post '/applications/:id/add_pet', to: 'applications#add_pet', as: :add_pet_application
 
   post '/pet_applications', to: 'pet_applications#create'
+  patch '/pet_applications', to: 'pet_applications#update'
 
   get '/shelters', to: 'shelters#index'
   get '/shelters/new', to: 'shelters#new'
@@ -47,4 +48,6 @@ Rails.application.routes.draw do
   post '/veterinary_offices/:veterinary_office_id/veterinarians', to: 'veterinarians#create'
 
   get '/admin/shelters', to: 'admin_shelters#index'
+  get '/admin/applications', to: 'admin_applications#index'
+  get '/admin/applications/:id', to: 'admin_applications#show'
 end

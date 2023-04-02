@@ -9,6 +9,8 @@ class ApplicationsController < ApplicationController
     @pet_search = params[:pet_name].present? ? Pet.search(params[:pet_name]) : []
   end
 
+
+
   def add_pet
     @application = Application.find(params[:id])
     pet = Pet.find(params[:pet_id])

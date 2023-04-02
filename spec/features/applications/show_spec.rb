@@ -50,6 +50,16 @@ RSpec.describe 'Application Show Page' do
         expect(page).to have_content("Lucille Bald")
         expect(page).to_not have_content("Lobster")
       end
+
+      it 'I can add a pet to the application' do
+        visit "/applications/#{@application_1.id}"
+
+        fill_in :pet_name, with: "Lobster"
+        click_button "Search"
+        click_button "Adopt this Pet"
+        
+        expect(page).to have_content("Lobster")
+      end
     end
   end
 
