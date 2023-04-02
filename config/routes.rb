@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get '/applications/:id', to: 'applications#show'
   post '/applications/:id/add_pet', to: 'applications#add_pet', as: :add_pet_application
 
+
+
   post '/pet_applications', to: 'pet_applications#create'
 
   get '/shelters', to: 'shelters#index'
@@ -47,4 +49,9 @@ Rails.application.routes.draw do
   post '/veterinary_offices/:veterinary_office_id/veterinarians', to: 'veterinarians#create'
 
   get '/admin/shelters', to: 'admin_shelters#index'
+  get '/admin/applications', to: 'admin_applications#index', as: :admin_applications
+  get '/admin/applications/:id', to: 'admin_applications#show', as: :admin_application
+  patch '/admin/applications/:id/pets/:pet_id/approve', to: 'applications#approve_pet', as: :approve_pet_application
+  patch '/admin/applications/:id/pets/:pet_id/reject', to: 'applications#reject_pet', as: :reject_pet_application
+
 end
