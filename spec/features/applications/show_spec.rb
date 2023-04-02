@@ -81,4 +81,28 @@ RSpec.describe 'Application Show Page' do
       expect(page).to have_button("Submit Application")
     end
   end
+
+  describe 'As a visitor' do
+    describe 'When I visit an applications show page and search for pets by name' do
+      it 'US8: I see any pet whose name partially matches my search' do
+        visit "/applications/#{@application_1.id}"
+
+        fill_in :pet_name, with: 'ob'
+        click_button 'Search'
+
+        expect(page).to have_content('Lobster') 
+      end
+
+      it 'US9: my search is case insensitive' do
+        @pet_uppercase = Pet.create(adoptable: true, age: 2, breed: 'boxer', name: 'FLUFFY', shelter_id: @shelter.id)
+
+        visit "/applications/#{@application_1.id}"
+
+        fill_in :pet_name, with: 'luf'
+        click_button 'Search'
+
+        expect(page).to have_content('FLUFFY')
+      end
+    end
+  end
 end
