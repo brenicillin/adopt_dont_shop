@@ -1,6 +1,5 @@
 class ApplicationsController < ApplicationController
   def index
-    @applications = Application.all
   end
   
   def show
@@ -12,11 +11,7 @@ class ApplicationsController < ApplicationController
   def add_pet
     @application = Application.find(params[:id])
     pet = Pet.find(params[:pet_id])
-    
-    unless @application.pets.include?(pet)
-      @application.pets << pet
-    end
-    
+    @application.pets << pet unless @application.pets.include?(pet)
     redirect_to "/applications/#{@application.id}"
   end
 
