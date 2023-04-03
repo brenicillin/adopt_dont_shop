@@ -105,4 +105,18 @@ RSpec.describe 'Application Show Page' do
       end
     end
   end
+
+  describe '#add_pet' do
+    it 'adds a pet to an application' do
+      @application_2.pets << @pet_1
+      visit "/applications/#{@application_2.id}"
+
+      fill_in :pet_name, with: 'Lobster'
+      click_button 'Search'
+
+      click_button 'Adopt this Pet'
+
+      expect(page).to have_content('Lobster')
+    end
+  end
 end
