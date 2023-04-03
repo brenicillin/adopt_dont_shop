@@ -53,4 +53,21 @@ RSpec.describe 'Admin Applications Show Page' do
       expect(page).to have_content('Rejected')
     end
   end
+
+  describe 'Approving an application' do
+    it 'When all pets on an application have been approved, the application status changes to "Approved"' do
+      visit "/admin/applications/#{@application_2.id}"
+      all('input[type="submit"][value="Approve"]').first.click
+      all('input[type="submit"][value="Approve"]').last.click
+      expect(@application_2.reload.status).to eq('Approved')
+    end
+  end
+
+  describe 'Rejecting an application' do
+    it 'When any pet on an application has been rejected, the application status changes to "Rejected"' do
+     visit "/admin/applications/#{@application_2.id}"
+     all('input[type="submit"][value="Reject"]').first.click
+     expect(@application_2.reload.status).to eq('Rejected')
+    end
+  end
 end
