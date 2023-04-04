@@ -28,7 +28,7 @@ RSpec.describe 'Admin Applications Show Page' do
       expect(page).to have_content(@application_1.status)
       expect(page).to have_content(@shelter_1.pets.first.name)
       expect(page).to have_content('Pending')
-      expect(page).to have_button('Approve')
+      expect(page).to have_button('Approve Application for Lucille Bald')
       expect(page).to_not have_content(@shelter_2.pets.first.name)
       expect(page).to_not have_content(@shelter_2.pets.last.name)
     end
@@ -37,7 +37,7 @@ RSpec.describe 'Admin Applications Show Page' do
       visit "/admin/applications/#{@application_1.id}"
 
       expect(page).to have_button('Approve')
-      click_button 'Approve'
+      click_button 'Approve Application for Lucille Bald'
 
       expect(current_path).to eq("/admin/applications/#{@application_1.id}")
       expect(page).to have_content('Approved')
@@ -46,7 +46,7 @@ RSpec.describe 'Admin Applications Show Page' do
     it 'when I reject a pet for a specific application, I am returned to the show page' do
       visit "/admin/applications/#{@application_1.id}"
 
-      expect(page).to have_button('Reject')
+      expect(page).to have_button('Reject Application for Lucille Bald')
       click_button 'Reject'
 
       expect(current_path).to eq("/admin/applications/#{@application_1.id}")
@@ -57,8 +57,12 @@ RSpec.describe 'Admin Applications Show Page' do
   describe 'Approving an application' do
     it 'When all pets on an application have been approved, the application status changes to "Approved"' do
       visit "/admin/applications/#{@application_2.id}"
-      all('input[type="submit"][value="Approve"]').first.click
-      all('input[type="submit"][value="Approve"]').last.click
+      click_button 'Approve Application for Lobster'
+
+      expect(@application_2.reload.status).to eq('In Progress')
+
+      click_button 'Approve Application for Buddy'
+
       expect(@application_2.reload.status).to eq('Approved')
     end
   end
@@ -66,7 +70,8 @@ RSpec.describe 'Admin Applications Show Page' do
   describe 'Rejecting an application' do
     it 'When any pet on an application has been rejected, the application status changes to "Rejected"' do
      visit "/admin/applications/#{@application_2.id}"
-     all('input[type="submit"][value="Reject"]').first.click
+     click_button 'Reject Application for Lobster'
+     
      expect(@application_2.reload.status).to eq('Rejected')
     end
   end

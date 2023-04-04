@@ -7,9 +7,9 @@ class PetApplication < ApplicationRecord
    private 
    
   def update_application_status
-    if application.pet_applications.all? {|pet_application| pet_application.status == 'Approved'}
+    if self.application.pet_applications.all? {|pet_application| pet_application.status == 'Approved'}
       application.update(status: 'Approved')
-    elsif application.pet_applications.any? {|pet_application| pet_application.status == 'Rejected'}
+    elsif self.application.pet_applications.any? {|pet_application| pet_application.status == 'Rejected'}
       application.update(status: 'Rejected')
     end
   end

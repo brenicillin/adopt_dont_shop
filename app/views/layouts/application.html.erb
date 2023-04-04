@@ -8,6 +8,14 @@
 
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
+
+      <p><%= link_to "Pets", "/pets" %>
+      <%= link_to "Shelters", "/shelters" %>
+      <%= link_to "Veterinarians", "/veterinarians" %>
+      <%= link_to "Veterinary Offices", "/veterinary_offices" %></p>
+      <div class="admin-sign-in">
+      <%= button_to "Sign In", "/admin/applications", method: :get %>
+      </div>
   </head>
 
   <body>
@@ -17,10 +25,6 @@
       </div>
     <% end %>
     <section>
-      <p><%= link_to "Pets", "/pets" %></p>
-      <p><%= link_to "Shelters", "/shelters" %></p>
-      <p><%= link_to "Veterinarians", "/veterinarians" %></p>
-      <p><%= link_to "Veterinary Offices", "/veterinary_offices" %></p>
     </section>
     <%= yield %>
   </body>

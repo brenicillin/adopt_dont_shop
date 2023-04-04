@@ -10,8 +10,8 @@
   <p><%= pet.name %></p>
   <% pet_application = pet.pet_applications.find_by(application_id: @application.id) %>
   <% if pet_application.status == "Pending" %>
-    <%= button_to "Approve", approve_pet_application_path(id: @application.id, pet_id: pet.id), method: :patch %>
-    <%= button_to "Reject", reject_pet_application_path(id: @application.id, pet_id: pet.id), method: :patch %>
+    <%= button_to "Approve Application for #{pet.name}", approve_pet_application_path(id: @application.id, pet_id: pet.id), method: :patch %>
+    <%= button_to "Reject Application for #{pet.name}", reject_pet_application_path(id: @application.id, pet_id: pet.id), method: :patch %>
   <% else %>
     <p><%= pet_application.status %></p>
   <% end %>
