@@ -2,7 +2,7 @@ class PetApplication < ApplicationRecord
   belongs_to :pet
   belongs_to :application
 
-  after_commit :update_application_status, on: [:create, :update]
+  after_commit :update_application_status, on: :update
 
    private 
    
