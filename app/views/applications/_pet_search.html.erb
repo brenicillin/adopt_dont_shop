@@ -7,9 +7,11 @@
 
 <% if @pet_search.present? %>
   <% @pet_search.each do |pet| %>
-    <p>
-      <%= link_to pet.name, "/pets/#{pet.id}" %>
-      <%= button_to "Adopt #{pet.name}", add_pet_application_path(@application, pet_id: pet.id), method: :post %>
-    </p>
+    <% if pet.adoptable %>
+      <p>
+        <%= link_to pet.name, "/pets/#{pet.id}" %>
+        <%= button_to "Adopt #{pet.name}", add_pet_application_path(@application, pet_id: pet.id), method: :post %>
+      </p>
+      <% end %>
   <% end %>
 <% end %>
