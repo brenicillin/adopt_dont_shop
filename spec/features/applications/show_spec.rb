@@ -113,10 +113,9 @@ RSpec.describe 'Application Show Page' do
 
       fill_in :pet_name, with: 'Lobster'
       click_button 'Search'
+      click_button 'Adopt Lobster'
 
-      click_button 'Adopt this Pet'
-
-      expect(page).to have_content('Lobster')
+      expect(page).to have_link('Lobster')
     end
   end
 end
